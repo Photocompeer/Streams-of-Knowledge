@@ -1,110 +1,172 @@
-/* Your provided CSS as a template */
-*{
-    text-decoration: none;
-    margin: 2rem;
-    padding: 0;
+/* ================================== */
+/* GLOBAL STYLES & FONT IMPORT        */
+/* ================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Resetting margins and padding for all elements more carefully */
+* {
     box-sizing: border-box;
-
-  }
-
-body{
-    font-family: 'Ariel',sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
+    margin: 0;
+    padding: 0;
 }
 
-h2{
-   text-align: center;
-   border-radius: 10px;
-   text-shadow: 2px 2px 5px #8f8a8a;
-} 
-
-.termContainer{
-  width: 70vw;
-  margin: auto;
-  justify-content:space-evenly;
-  display: flex;
-  align-content: start;
-  height:290vh;
-  padding: 20px;
-  background-color: #f0f2f5;
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa; /* A very light gray background */
 }
-
-.terms-buttons button{
-  font-size: 1.2rem; /* Increase the font size */
-  padding: 8px 16px; /* A little extra padding can help */ 
-}
-
-.terms-buttons{
-  text-align: center;
-}
-
 
 /* ================================== */
-/* Media Queries                      */
+/* MAIN CONTENT LAYOUT                */
 /* ================================== */
+.terms-container {
+    max-width: 900px;
+    margin: 40px auto; /* Centering the container with some vertical margin */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
-@media (min-width: 768px) {
-  .user-info {
-    padding: 1rem 2rem;
-  }
-  
-  main {
-    padding: 2rem;
-  }
-  
-  .search-box .row {
-    gap: 1rem;
-  }
-
-  .question-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-  }
-  
-  .question-header p {
-    flex-grow: 1;
-    margin-left: 1rem;
+.terms-header {
     text-align: center;
-  }
+    margin-bottom: 30px;
+}
 
-  .answer-form {
-    flex-wrap: nowrap;
-  }
-  
-  #questionsList li {
-    padding: 2rem;
-  }
+.terms-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50; /* Darker heading color */
+}
 
-  .answers {
+.terms-header p {
+    font-size: 1rem;
+    color: #7f8c8d; /* Muted color for the sub-heading */
+    margin-top: 5px;
+}
+
+.terms-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #34495e; /* Sub-heading color */
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.terms-content p, 
+.terms-content ul {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.terms-content ul {
+    list-style-type: disc;
+    margin-left: 30px; /* Indent for the list */
+}
+
+.terms-content ul li {
+    margin-bottom: 5px;
+}
+
+.note {
+    font-style: italic;
+    color: #e74c3c; /* A warning color for the note */
+    font-weight: 500;
+}
+
+/* ================================== */
+/* ACTION BUTTONS & CHECKBOX          */
+/* ================================== */
+.terms-action {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-  }
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+}
 
-  .answer-item {
+.terms-checkbox {
     display: flex;
     align-items: center;
-    gap: 1rem;
-  }
-  
-  .answer-item p {
-    flex-grow: 1;
-  }
+    gap: 10px;
 }
 
-@media (min-width: 1024px) {
-  .question-header h2 {
-    font-size: 1.8rem;
-  }
-  
-  .question-header p {
-    font-size: 1rem;
-  }
-  
-  .add-question-btn {
-    font-size: 1.1rem;
-  }
+.terms-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
+
+.terms-checkbox label {
+    font-size: 1rem;
+    color: #444;
+    cursor: pointer;
+}
+
+#signupBtn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #3498db; /* A professional blue color */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#signupBtn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+#signupBtn:active {
+    transform: translateY(0); /* Return on click */
+}
+
+/* ================================== */
+/* MEDIA QUERIES (RESPONSIVENESS)     */
+/* ================================== */
+@media (max-width: 768px) {
+    .terms-container {
+        margin: 20px;
+        padding: 15px;
+    }
+    
+    .terms-header h2 {
+        font-size: 2rem;
+    }
+
+    .terms-action {
+        flex-direction: column; /* Stacks the checkbox and button on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .terms-container {
+        padding: 10px;
+    }
+    
+    .terms-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .terms-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .terms-content p, 
+    .terms-content ul,
+    .terms-checkbox label {
+        font-size: 0.95rem;
+    }
+
+    #signupBtn {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
