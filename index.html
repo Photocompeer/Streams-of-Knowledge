@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="Abaye John Kwaku">
+        <meta name="description" content="HomeWork Channel For The TeenAge.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Streams of Knowledge </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+        <link rel="stylesheet" href="terms.css" />
+    </head>
+
+    <body>
+    <div class="Terms">
+        <h2>TERMS AND CONDITIONS</h2>
+        <div class="termContainer">
+            <div>
+                        <h3>1. Acceptance of Terms</h3>
+                        <p>By accessing or using the "Streams of Knowledge" platform, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use the Platform.</p>
+                   
+                        <h3>2. Purpose of the Platform</h3>
+                        <p>The primary purpose of this Platform is to provide an educational resource where students can access and interact with questions for self-testing and preparation for various examinations or tests. This platform is designed to supplement your learning, not replace traditional education.</p>
+                    
+                        <h3>3. Content and User Contributions</h3>
+                        <p>
+                            <strong>3.1 Question Origin:</strong> Many questions on this Platform are derived from past examination papers (e.g., W.A.E.C.) or past school tests. These questions are for practice and are not intended to represent "leaked" or current examination material.
+                        </p>
+                        <p>
+                            <strong>3.2 User-Submitted Answers:</strong> Answers provided by users to any question on the Platform are solely the opinion of the submitting user. The Administrator of the Platform does not endorse these as definitively correct answers. We strongly encourage all users to verify information and answers with trusted educational sources or professionals where accuracy is critical.
+                        </p>
+                        <p>
+                            <strong>3.3 Content Ownership:</strong> You retain ownership of any content you submit to the Platform (questions, answers, comments, etc.). However, by submitting content, you grant "Streams of Knowledge" a worldwide, no-cost, royalty-free license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content in any media.
+                        </p>
+            
+                        <h3>4. Prohibited Conduct</h3>
+                        <p>
+                            To maintain a positive and productive learning environment, you agree not to:
+                            <ul>
+                                <li>Use vulgar, abusive, hateful, or discriminatory language.</li>
+                                <li>Share any content that is inappropriate, offensive, illegal, or does not align with the educational purpose of the Platform.</li>
+                                <li>Impersonate any person or entity.</li>
+                                <li>Upload or transmit viruses, malware, or any other harmful code.</li>
+                                <li>Engage in any activity that disrupts or interferes with the Platform's operation or other users' experience.</li>
+                                <li>Attempt to gain unauthorized access to any part of the Platform or its related systems.</li>
+                            </ul>
+                            "Streams of Knowledge" reserves the right to BLOCK or BAN the account of any user found violating these rules without prior notice.
+                        </p>
+                    
+                        <h3>5. Disclaimer of Warranties</h3>
+                        <p>This Platform and all its content are provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied, including but not limited to, implied warranties of merchantability, fitness for a particular purpose, or non-infringement. We do not guarantee that the Platform will be uninterrupted, error-free, or secure.</p>
+                    
+                        <h3>6. Limitation of Liability</h3>
+                        <p>In no event shall "Streams of Knowledge" or its administrators be liable for any direct, indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Platform; (ii) any conduct or content of any third party on the Platform; (iii) any content obtained from the Platform; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage.</p>
+                    
+                        <h3>7. Intellectual Property</h3>
+                        <p>All intellectual property rights on this site, including its design, text, graphics, and software, are owned by "Streams of Knowledge" or its licensors. You may not reproduce, distribute, modify, or create derivative works of any part of the Platform without express written permission.</p>
+                    
+                        <h3>8. Account Termination</h3>
+                        <p>"Streams of Knowledge" may terminate or suspend your access to the Platform immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Upon termination, your right to use the Platform will immediately cease.</p>
+                   
+                        <h3>9. Changes to Terms</h3>
+                        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                    
+                        <h3>10. Contact Information</h3>
+                        <p>For questions, support, or to report inappropriate content, please reach out to us via WhatsApp or Telegram at: +233 (0) 207 447 161.</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="terms-buttons">
+            <input type="checkbox" id="agreeCheckbox" />
+            <label for="agreeCheckbox">I agree to the terms and conditions</label>
+            <button id="signupBtn" onclick="openSignup()">Sign Up</button>
+        </div>
+
+        <script>
+            function openSignup() {
+                const agreeCheckbox = document.getElementById('agreeCheckbox');
+                if (agreeCheckbox.checked) {
+                    window.open('auth.html', '_self');
+                } else {
+                    alert('You must agree to the terms and conditions to proceed.');
+                }
+            }
+        </script>
+    </body>
+</html>

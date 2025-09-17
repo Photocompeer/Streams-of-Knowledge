@@ -1,0 +1,593 @@
+/* ================================== */
+/* Global & Base Styles               */
+/* ================================== */
+
+/* A universal box-sizing rule for a more predictable layout model. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: 80vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Common button and hover styles */
+.btn, .add-question-btn, .back-btn, .answer-btn, .upvote-btn, .downvote-btn, .search-btn {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  padding: 12px;
+}
+
+/* ================================== */
+/* Header & Navigation                */
+/* ================================== */
+
+.user-info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #9794f9;
+  border-bottom: 1px solid #ddd;
+  font-size: large;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.user-info button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+.user-info button:hover {
+  background-color: #e0e0e0;
+}
+
+/* ================================== */
+/* Auth Forms (Login/Register)        */
+/* ================================== */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.auth-form {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  transition: transform 0.3s, opacity 0.3s;
+  display: none;
+}
+
+.auth-form.active {
+  display: block;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-group i {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.input-group label {
+  position: absolute;
+  top: 12px;
+  left: 40px;
+  color: #aaa;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.3s ease-out;
+}
+
+/* Floating label effect */
+.input-group input:not(:placeholder-shown) + label,
+.input-group input:focus + label,
+.input-group select:focus + label,
+.input-group select:valid + label,
+.input-group select:not([value=""]) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #007bff;
+  background-color: #fff;
+  padding: 0 5px;
+}
+
+.btn {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.form-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.form-links .toggle-btn {
+  background: none;
+  color: #007bff;
+  padding: 0;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.recover a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  display: block;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.recover a:hover {
+  text-decoration: underline;
+}
+
+.message-div {
+  color: #d9534f;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* ================================== */
+/* Search & Questions                 */
+/* ================================== */
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row input {
+  flex: 1;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  color: #333;
+  padding: 0 10px;
+}
+
+.search-btn {
+  background: transparent;
+  padding: 10px;
+}
+
+.search-btn .fa-solid {
+  color: #555;
+  font-size: 22px;
+}
+
+.result-box {
+  max-height: 300px;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  margin-top: 5px;
+}
+
+.result-box ul li {
+  padding: 15px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.result-box ul li:hover {
+  background-color: #f9f9f9;
+}
+
+.result-box ul li:last-child {
+  border-bottom: none;
+}
+
+/* Common Section Styles */
+#ask-section, #questions-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+}
+
+#questions-section p {
+  font-size: medium;
+  font-weight: bold;
+  color: rgb(46, 32, 32);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-question-btn, .back-btn {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  visibility: hidden;
+
+
+  /*my manipulations HERE*/
+
+}
+
+.add-question-btn:hover, .back-btn:hover {
+  background-color: #45a049;
+}
+
+#questionInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#submitQuestionBtn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+}
+
+#submitQuestionBtn:hover {
+  background-color: #0056b3;
+}
+
+#questionsList li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+#questionsList li strong {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+#questionsList li .answers {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-left: 2px solid #ccc;
+}
+
+#questionsList li .answers .answer-item {
+  margin-bottom: 5px;
+  font-size: 0.95em;
+  color: #555;
+}
+
+#questionsList li .answer-form {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+#questionsList li .answer-input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.upvote-btn, .downvote-btn, .answer-btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.upvote-btn {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.upvote-btn:hover {
+  background-color: #e0a800;
+}
+
+.downvote-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.downvote-btn:hover {
+  background-color: #c82333;
+}
+
+.answer-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.answer-btn:hover {
+  background-color: #218838;
+}
+
+/* ================================== */
+/* Post Question Page (Specific)      */
+/* ================================== */
+
+#ask-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.question-header h2, .back-btn {
+  margin-bottom: 1rem;
+}
+
+#questionlevel {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: vertical;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.7em top 50%;
+  background-size: 0.65em auto;
+}
+
+/* ================================== */
+/* Footer                             */
+/* ================================== */
+
+footer {
+  background-color: #9794f9;;
+  color: white;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.social-links a {
+  color: white;
+  font-size: 2rem;
+  transition: color 0.2s;
+  size: 1px;
+}
+
+.social-links a:hover {
+  color: #ffd700;
+}
+
+/* ================================== */
+/* Media Queries                      */
+/* ================================== */
+
+@media (min-width: 768px) {
+  .user-info {
+    padding: 1rem 2rem;
+  }
+  
+  main {
+    padding: 2rem;
+  }
+  
+  .search-box .row {
+    gap: 1rem;
+  }
+
+  .question-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  
+  .question-header p {
+    flex-grow: 1;
+    margin-left: 1rem;
+    text-align: center;
+  }
+
+  .answer-form {
+    flex-wrap: nowrap;
+  }
+  
+  #questionsList li {
+    padding: 2rem;
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .answer-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .answer-item p {
+    flex-grow: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .question-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .question-header p {
+    font-size: 1rem;
+  }
+  
+  .add-question-btn {
+    font-size: 1.1rem;
+  }
+}
+
+/* Add to the bottom of your STYLES.CSS file */
+
+/* ================================== */
+/* Image Upload Field                 */
+/* ================================== */
+.image-upload-group {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.image-upload-group label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #555;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.image-upload-group label:hover {
+  background-color: #e9e9e9;
+  border-color: #999;
+}
+
+.image-upload-group input[type="file"] {
+  display: none; /* Hide the actual file input */
+}
+
+    /* ================================== */
+    /* Image Display on Home Page         */
+    /* ================================== */
+    .question-image-container {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .question-image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }

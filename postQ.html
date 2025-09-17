@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="Abaye John Kwaku">
+  <meta name="description" content="HomeWork Channel For The TeenAge.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streams Of Knowledge</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://kit.fontawesome.com/7927e33627.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="user-info">
+    <span>Welcome, <span id="loggedUserName">Guest</span></span>
+    <button id="logout">Log Out</button>
+  </div>
+    <main>
+    <section id="ask-section">
+      <div class="question-header">
+          <h2>Which Question Are You Struggling With?</h2>
+          <a href="home.html" class="home-link">
+          <button class="back-btn">Back to Questions</button>
+          </a>
+      </div>
+          <div class="input-group">
+          <select id="questionlevel" required>
+                    <option value="" disabled selected>Select Your Level</option>
+                    <option value="JHS">JHS 1 Maths</option>
+                    <option value="JHS">JHS 1 Science</option>
+                    <option value="JHS">JHS 2 Maths</option>
+                    <option value="JHS">JHS 2 Science</option>
+                    <option value="JHS">JHS 3 Maths</option>
+                    <option value="JHS">JHS 3 Science</option>
+                    <option value="JHS">BECE Maths</option>
+                    <option value="JHS">BECE Science</option>
+                    <option value="SHS">SHS 1 Maths</option>
+                    <option value="SHS">SHS 1 Science</option>
+                    <option value="SHS">SHS 2 Maths</option>
+                    <option value="SHS">SHS 2 Science</option>
+                    <option value="SHS">SHS 3 Maths</option>
+                    <option value="SHS">SHS 3 Science</option>
+                    <option value="SHS">WASSCE Maths</option>
+                    <option value="SHS">WASSCE Science</option>
+                    <option value="SHS">WASSCE PRIVATE Maths</option>
+                    <option value="SHS">WASSCE PRIVATE Science</option>
+          </select>
+          <label for="questionlevel">Level</label>
+          </div>
+          <textarea id="questionInput" placeholder="Type your question here" rows="6" required></textarea>
+
+          <div class="image-upload-group">
+          <label for="imageUpload">
+              <i class="fa-solid fa-camera"></i>
+                  Add a Diagram or Image (Optional)
+          </label>
+            <input type="file" id="imageUpload" accept="image/*" />
+        </div>
+ 
+          <button id="submitQuestionBtn">Submit Question</button>
+           </section>
+        </main>
+    
+    <script type="module" src="postq.js"></script>
+</body>
+</html>

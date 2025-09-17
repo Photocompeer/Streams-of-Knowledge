@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Abaye John Kwaku">
+    <meta name="description" content="HomeWork Channel For The TeenAge.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streams of Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+
+              *{
+                text-decoration: none;
+                margin: 0.5rem;
+                padding: 0;
+                box-sizing: border-box;
+              }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+
+        }
+        .auth-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 80vh;
+                width: 80vw;
+                margin: 10px;
+                padding: 40px;
+                background-color: #f0f2f5;
+                transition: all 0.5s ease-in-out;
+        }
+        .form-container {
+            display: none;
+            transition: all 0.5s ease-in-out;
+        }
+        .form-container.active {
+            display: block;
+        }
+
+                /* ================================== */
+                        /* Media Queries */
+                /* ================================== */
+
+        @media (min-width: 768px) {
+        .user-info {
+            padding: 1rem 2rem;
+        }
+        
+        main {
+            padding: 2rem;
+        }
+        
+        .search-box .row {
+            gap: 1rem;
+        }
+
+        .question-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+        
+        .question-header p {
+            flex-grow: 1;
+            margin-left: 1rem;
+            text-align: center;
+        }
+
+        .answer-form {
+            flex-wrap: nowrap;
+        }
+        
+        #questionsList li {
+            padding: 2rem;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .answer-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .answer-item p {
+            flex-grow: 1;
+        }
+        }
+
+        @media (min-width: 1024px) {
+        .question-header h2 {
+            font-size: 1.8rem;
+        }
+        
+        .question-header p {
+            font-size: 1rem;
+        }
+        
+        .add-question-btn {
+            font-size: 1.1rem;
+        }
+        }
+
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+
+    <div class="auth-container bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-6">
+        
+        <div class="flex justify-center mb-4">
+            <button class="toggle-btn px-4 py-2 rounded-l-lg border-2 border-r-0 border-gray-300 font-medium text-gray-700 bg-gray-200 transition-colors duration-200 ease-in-out" data-form="signIn">Sign In</button>
+            <button class="toggle-btn px-4 py-2 rounded-r-lg border-2 border-gray-300 font-medium text-gray-700 transition-colors duration-200 ease-in-out" data-form="signUp">Sign Up</button>
+        </div>
+
+        <div id="signUpForm" class="form-container active">
+            <form id="signUpFormEl" class="space-y-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Create an Account</h2>
+                <div>
+                    <label for="signUpEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="signUpEmail" name="email" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="signUpPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="signUpPassword" name="password" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="signUpUsername" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" id="signUpUsername" name="username" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="input-group">
+                    <label for="signUpUserlevel" class="block text-sm font-medium text-gray-700">User Level</label>
+                    <select id="signUpUserlevel" name="userlevel" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select your level</option>
+                        <option value="JHS">JHS</option>
+                        <option value="SHS">SHS</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign Up</button>
+            </form>
+            <div id="signUpMessage" class="mt-4 p-3 rounded-md text-center hidden"></div>
+        </div>
+
+        <div id="signInForm" class="form-container">
+            <form id="signInFormEl" class="space-y-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
+                <div>
+                    <label for="signInEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="signInEmail" name="email" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="signInPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="signInPassword" name="password" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign In</button>
+            </form>
+            <div id="signInMessage" class="mt-4 p-3 rounded-md text-center hidden"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+           const firebaseConfig = {
+                apiKey: "AIzaSyCHeqn6XDpPZUc46T1dl74maVruQhfYj9E",
+                authDomain: "section-a-3bc20.firebaseapp.com",
+                databaseURL: "https://section-a-3bc20-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "section-a-3bc20",
+                storageBucket: "section-a-3bc20.firebasestorage.app",
+                messagingSenderId: "944136450248",
+                appId: "1:944136450248:web:72552f8accb738ebdd35fd",
+                measurementId: "G-QS2J4SWS18"
+            };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // Helper function to display messages
+        function showMessage(message, divId, isSuccess = true) {
+            const messageDiv = document.getElementById(divId);
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            if (isSuccess) {
+                messageDiv.className = 'mt-4 p-3 rounded-md text-center bg-green-100 text-green-800';
+            } else {
+                messageDiv.className = 'mt-4 p-3 rounded-md text-center bg-red-100 text-red-800';
+            }
+
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'hidden';
+            }, 5000);
+        }
+
+        // DOM elements
+        const authContainer = document.querySelector('.auth-container');
+        const signUpFormEl = document.getElementById('signUpFormEl');
+        const signInFormEl = document.getElementById('signInFormEl');
+        const signUpForm = document.getElementById('signUpForm');
+        const signInForm = document.getElementById('signInForm');
+
+        // Event listener for form switching
+        authContainer.addEventListener('click', (event) => {
+            const toggleBtn = event.target.closest('.toggle-btn');
+            if (toggleBtn) {
+                const formToShow = toggleBtn.dataset.form;
+                if (formToShow === 'signIn') {
+                    signUpForm.classList.remove('active');
+                    signInForm.classList.add('active');
+                } else if (formToShow === 'signUp') {
+                    signInForm.classList.remove('active');
+                    signUpForm.classList.add('active');
+                }
+            }
+        });
+
+        // Event listener for Sign Up
+        signUpFormEl.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            const username = document.getElementById('signUpUsername').value;
+            const userlevel = document.getElementById('signUpUserlevel').value;
+
+            try {
+                // Step 1: Create the user in Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Step 2: Prepare the data to be saved in the database
+                const userData = {
+                    email: email,
+                    username: username,
+                    userlevel: userlevel,
+                    createdAt: new Date().toISOString()
+                };
+
+                // Step 3: Post the user data to the Realtime Database using the user's unique UID as the key
+                await set(ref(db, 'users/' + user.uid), userData);
+                
+                // IMPORTANT: This confirms the write was successful before showing a message
+                //console.log("User data successfully saved to Realtime Database! UID:", user.uid);
+                //showMessage("Sign up successful! Data posted to database.", 'signUpMessage', true);
+
+                // Redirect to home page on successful sign-up
+                window.location.href = 'home.html';
+
+            } catch (error) {
+                const errorCode = error.code;
+                let errorMessage = 'An error occurred. Please try again.';
+                if (errorCode === 'auth/email-already-in-use') {
+                    errorMessage = 'Email address is already in use!';
+                } else if (errorCode === 'auth/weak-password') {
+                    errorMessage = 'Password is too weak. Please choose a stronger one.';
+                }
+                showMessage(errorMessage, 'signUpMessage', false);
+                console.error('Sign-up error:', error);
+            }
+        });
+
+        // Event listener for Sign In
+        signInFormEl.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessage("Sign in successful!", 'signInMessage', true);
+
+                // Redirect to home page on successful sign-up
+                window.location.href = 'home.html';
+
+            } catch (error) {
+                const errorCode = error.code;
+                let errorMessage = 'Incorrect email or password.';
+                if (errorCode === 'auth/invalid-credential' || errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+                    errorMessage = 'Incorrect email or password.';
+                }
+                showMessage(errorMessage, 'signInMessage', false);
+                console.error('Sign-in error:', error);
+            }
+        });
+
+    </script>
+</body>
+</html>

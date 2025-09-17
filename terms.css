@@ -1,0 +1,110 @@
+/* Your provided CSS as a template */
+*{
+    text-decoration: none;
+    margin: 2rem;
+    padding: 0;
+    box-sizing: border-box;
+
+  }
+
+body{
+    font-family: 'Ariel',sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+h2{
+   text-align: center;
+   border-radius: 10px;
+   text-shadow: 2px 2px 5px #8f8a8a;
+} 
+
+.termContainer{
+  width: 70vw;
+  margin: auto;
+  justify-content:space-evenly;
+  display: flex;
+  align-content: start;
+  height:290vh;
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+.terms-buttons button{
+  font-size: 1.2rem; /* Increase the font size */
+  padding: 8px 16px; /* A little extra padding can help */ 
+}
+
+.terms-buttons{
+  text-align: center;
+}
+
+
+/* ================================== */
+/* Media Queries                      */
+/* ================================== */
+
+@media (min-width: 768px) {
+  .user-info {
+    padding: 1rem 2rem;
+  }
+  
+  main {
+    padding: 2rem;
+  }
+  
+  .search-box .row {
+    gap: 1rem;
+  }
+
+  .question-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  
+  .question-header p {
+    flex-grow: 1;
+    margin-left: 1rem;
+    text-align: center;
+  }
+
+  .answer-form {
+    flex-wrap: nowrap;
+  }
+  
+  #questionsList li {
+    padding: 2rem;
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .answer-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .answer-item p {
+    flex-grow: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .question-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .question-header p {
+    font-size: 1rem;
+  }
+  
+  .add-question-btn {
+    font-size: 1.1rem;
+  }
+}
