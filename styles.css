@@ -590,4 +590,22 @@ footer {
         width: 100%;
         height: auto;
         display: block;
+
     }
+
+/* --- Styles for Smaller Screens --- */
+@media (max-width: 600px) {
+    .answer-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .answer-input {
+        width: 100%; /* Make the input take full width */
+        margin-bottom: 10px; /* Add some space between the input and button */
+    }
+
+    .answer-btn {
+        width: 100%; /* Make the button take full width */
+    }
+}
