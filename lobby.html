@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Lobby - Streams of Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+
+        <div class="flex items-center gap-3 cursor-pointer p-6" onclick="window.location.href='lobby'">
+            <div class="relative">
+                <div class="bg-indigo-600 w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+                    <span class="text-white font-black text-xl">S</span>
+                </div>
+                <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                </span>
+            </div>
+            
+            <div class="flex flex-col">
+                <div class="flex items-center gap-2">
+                    <h1 class="text-slate-800 font-black text-lg leading-tight uppercase tracking-tighter">
+                        Streams
+                    </h1>
+                    <span class="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-widest border border-amber-200">
+                        Beta
+                    </span>
+                </div>
+                <span class="text-indigo-600 italic text-sm font-bold -mt-1">Knowledge</span>
+            </div>
+        </div>
+
+    <main class="flex-1 flex items-center justify-center p-6 py-12">
+        <div class="w-full max-w-lg bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-100">
+            <div id="user-profile-display" class="hidden mb-6 flex flex-col items-center text-center">
+                <div class="bg-indigo-50 px-4 py-2 rounded-full border border-indigo-100 mb-2">
+                    <p class="text-indigo-600 font-black text-sm uppercase">Welcome, <span id="display-alias">Explorer</span> 🎓</p>
+                </div>
+                <p id="display-school" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest"></p>
+            </div>
+
+            <h2 class="text-3xl font-black text-indigo-600 mb-2 text-center uppercase tracking-tighter">Quiz Lobby</h2>
+            <p class="text-slate-400 text-center mb-10 text-sm font-medium">Select your level and subject to start.</p>
+
+            <div class="space-y-8">
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">1. Select Level</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="selectLevel('JHS', this)" class="lvl-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">JHS</button>
+                        <button onclick="selectLevel('SHS', this)" class="lvl-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">SHS</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-3">2. Select Subject</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="selectSub('Science', this)" class="sub-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">Science</button>
+                        <button onclick="selectSub('Maths', this)" class="sub-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">Maths</button>
+                        <button onclick="selectSub('English', this)" class="sub-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">English</button>
+                        <button onclick="selectSub('Social', this)" class="sub-btn p-5 border-2 border-slate-100 rounded-2xl font-black text-slate-700 hover:border-indigo-500 transition">Social</button>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100">
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Your Recent History</h3>
+                    <div id="history-list" class="space-y-2"></div>
+                </div>
+
+                <button id="start-btn" onclick="goToQuiz()" class="w-full bg-indigo-600 text-white py-6 rounded-3xl font-black text-xl shadow-xl shadow-indigo-100 opacity-50 cursor-not-allowed transition-all active:scale-95" disabled>START CHALLENGE</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-slate-900 py-12 mt-auto">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-white font-black text-xl tracking-tighter uppercase mb-2">Streams <span class="text-indigo-500">of</span> Knowledge</h2>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">&copy; 2026 All rights reserved.</p>
+            </div>
+            <div class="flex gap-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <a href="terms" class="hover:text-white transition">Terms</a>
+                <a href="privacy" class="hover:text-white transition">Privacy</a>
+                <button onclick="toggleContactModal(true)" class="hover:text-white transition uppercase">Contact</button>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { auth, db } from './script.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { ref, get, query, limitToLast } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-database.js";
+
+        let sLvl = '', sSub = '';
+
+        window.selectLevel = (lvl, btn) => {
+            sLvl = lvl;
+            document.querySelectorAll('.lvl-btn').forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600'));
+            btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+            checkSelection();
+        };
+
+        window.selectSub = (sub, btn) => {
+            sSub = sub;
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-600'));
+            btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-600');
+            checkSelection();
+        };
+
+        function checkSelection() {
+            const startBtn = document.getElementById('start-btn');
+            if(sLvl && sSub) {
+                startBtn.disabled = false;
+                startBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        window.goToQuiz = () => {
+            localStorage.setItem('quizLevel', sLvl);
+            localStorage.setItem('quizSubject', sSub);
+            window.location.href = 'quiz'; 
+        };
+
+        // ... Other functions (sendFeedback, toggleModal) ...
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const listContainer = document.getElementById('history-list');
+                const historySnap = await get(query(ref(db, `users/${user.uid}/history`), limitToLast(3)));
+                listContainer.innerHTML = '';
+                
+                if(historySnap.exists()) {
+                    historySnap.forEach(snap => {
+                        const h = snap.val();
+                        listContainer.insertAdjacentHTML('afterbegin', `
+                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl text-[11px] font-black border-l-4 border-indigo-500 shadow-sm mb-2">
+                                <span class="text-slate-600 uppercase tracking-tighter">${h.level} • ${h.subject}</span>
+                                <span class="text-indigo-600 italic">+${h.score} PTS</span>
+                            </div>
+                        `);
+                    });
+                } else {
+                    listContainer.innerHTML = '<p class="text-slate-300 text-center text-xs italic py-4">No challenges completed yet.</p>';
+                }
+            } else {
+                window.location.href = 'index';
+            }
+        });
+    </script>
+</body>
+</html>

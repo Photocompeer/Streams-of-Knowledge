@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streams of Knowledge - Entry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <main class="flex-1 flex items-center justify-center p-6">
+        <div class="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100">
+            <div class="text-center mb-8">
+                <div class="bg-indigo-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-black text-3xl">S</span>
+                </div>
+                <h1 id="auth-title" class="text-3xl font-black text-slate-800 uppercase tracking-tighter italic">Create Account</h1>
+            </div>
+
+            <div id="signup-fields" class="space-y-4 mb-4">
+                <input type="text" id="alias" placeholder="Choose an Alias" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-500 font-bold">
+                <input type="text" id="school" placeholder="Your School" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-500 font-bold">
+            </div>
+            
+            <input type="email" id="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-500 mb-4 font-bold">
+            <input type="password" id="password" placeholder="Password" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 ring-indigo-500 mb-6 font-bold">
+            
+            <button id="auth-btn" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all active:scale-95">Register & Start</button>
+            
+            <p class="text-center text-sm text-slate-400 mt-8 font-bold">
+                <span id="toggle-text">Already have an account?</span> 
+                <button id="toggle-btn" class="text-indigo-600 font-black hover:underline uppercase text-xs ml-1">Login</button>
+            </p>
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-slate-100 py-8 text-center">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="terms" class="text-[10px] font-black text-slate-400 uppercase hover:text-indigo-600 transition">Terms</a>
+            <a href="privacy" class="text-[10px] font-black text-slate-400 uppercase hover:text-indigo-600 transition">Privacy</a>
+        </div>
+        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">© 2026 Streams of Knowledge</p>
+    </footer>
+
+    <script type="module">
+        import { auth, db } from './script.js';
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { ref, set } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-database.js";
+
+        let isLogin = false;
+        const btn = document.getElementById('auth-btn');
+        const toggle = document.getElementById('toggle-btn');
+
+        toggle.onclick = () => {
+            isLogin = !isLogin;
+            document.getElementById('auth-title').innerText = isLogin ? "Welcome Back" : "Create Account";
+            document.getElementById('signup-fields').style.display = isLogin ? "none" : "block";
+            btn.innerText = isLogin ? "Login Now" : "Register & Start";
+            document.getElementById('toggle-text').innerText = isLogin ? "New here?" : "Already have an account?";
+            toggle.innerText = isLogin ? "Sign Up" : "Login";
+        };
+
+        btn.onclick = async () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            try {
+                if (isLogin) {
+                    await signInWithEmailAndPassword(auth, email, pass);
+                } else {
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await set(ref(db, `users/${res.user.uid}/profile`), { 
+                        alias: document.getElementById('alias').value, 
+                        school: document.getElementById('school').value 
+                    });
+                }
+                window.location.href = 'lobby';
+            } catch (e) { alert(e.message); }
+        };
+    </script>
+</body>
+</html>
+    

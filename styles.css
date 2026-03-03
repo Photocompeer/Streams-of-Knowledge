@@ -1,0 +1,5 @@
+@keyframes pulse-red {
+    0%, 100% { color: #ef4444; }
+    50% { color: #991b1b; }
+}
+#timer-text { animation: pulse-red 1s infinite; }

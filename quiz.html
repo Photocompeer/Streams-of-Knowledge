@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Challenge - Live</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <main class="flex-1 flex items-center justify-center p-6">
+        <div id="q-container" class="w-full max-w-xl bg-white rounded-[3rem] p-10 shadow-2xl border border-slate-100 relative overflow-hidden">
+            <div id="t-bar" class="absolute top-0 left-0 h-1.5 bg-indigo-600 transition-all duration-1000" style="width:100%"></div>
+            
+            <div class="flex justify-between items-center mb-10">
+                <div id="meta" class="bg-indigo-50 px-4 py-2 rounded-xl text-indigo-600 font-black text-[10px] uppercase tracking-widest italic">LOADING...</div>
+                <div class="text-slate-800 font-black text-2xl" id="timer">30s</div>
+            </div>
+
+            <div id="quiz-box">
+                <h3 id="q-text" class="text-2xl font-black text-slate-800 leading-tight mb-8">Fetching Question...</h3>
+                <div id="img-box" class="hidden mb-8 rounded-3xl overflow-hidden border border-slate-100 bg-slate-50 shadow-inner p-2">
+                    <img id="q-img" class="w-full h-auto max-h-60 object-contain rounded-2xl">
+                </div>
+                <div id="opts" class="grid grid-cols-1 gap-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-slate-100 py-8 text-center">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="terms" class="text-[10px] font-black text-slate-400 uppercase hover:text-indigo-600 transition">Terms</a>
+            <a href="privacy" class="text-[10px] font-black text-slate-400 uppercase hover:text-indigo-600 transition">Privacy</a>
+        </div>
+        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">© 2026 Streams of Knowledge</p>
+    </footer>
+
+    <script type="module">
+        import { auth, db } from './script.js';
+        import { ref, get, push } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-database.js";
+
+        let questions = [], idx = 0, score = 0, time = 30, timer;
+        const lvl = localStorage.getItem('quizLevel'); 
+        const sub = localStorage.getItem('quizSubject');
+
+        auth.onAuthStateChanged(async (u) => {
+            if(!u) {
+                window.location.href = 'index';
+                return;
+            }
+            if(!lvl || !sub) {
+                alert("No level or subject selected!");
+                window.location.href = 'lobby';
+                return;
+            }
+
+            const snap = await get(ref(db, `questions/${lvl}/${sub}`));
+            if(snap.exists()) { 
+                questions = Object.values(snap.val()); 
+                document.getElementById('meta').innerText = `${lvl} • ${sub}`; 
+                showQuestion(); 
+            } else {
+                alert("No questions found for this selection.");
+                window.location.href = 'lobby';
+            }
+        });
+
+        // ... Question display and timer logic ...
+
+        async function finishGame() {
+            clearInterval(timer);
+            await push(ref(db, `users/${auth.currentUser.uid}/history`), { 
+                level: lvl, subject: sub, score: score, timestamp: Date.now() 
+            });
+
+            document.getElementById('q-container').innerHTML = `
+                <div class="text-center py-10">
+                    <h2 class="text-4xl font-black text-indigo-600 mb-4 italic uppercase tracking-tighter">Quiz Over!</h2>
+                    <p class="text-slate-400 font-bold uppercase tracking-widest mb-2 text-[10px]">Total Points Earned</p>
+                    <h3 class="text-7xl font-black text-slate-800 mb-12 italic">${score}</h3>
+                    <button onclick="window.location.href='lobby'" class="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black uppercase shadow-xl hover:bg-indigo-700 transition-all"> Play Again </button>
+                </div>`;
+        }
+    </script>
+</body>
+</html>
